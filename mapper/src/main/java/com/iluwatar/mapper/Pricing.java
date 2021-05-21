@@ -3,15 +3,27 @@ package com.iluwatar.mapper;
 /**
  * <p>It is the commodity class. It records the information of a commodity.</p>
  */
-public final class Pricing {
+public final class Pricing {//NOPMD
 
   /**
-   * Commodity's information.
+   * Commodity's name.
    */
   private String name;
-  private int id;
+
+  /**
+   * Commodity's id.
+   */
+  private int id;//NOPMD
+
+  /**
+   * Commodity's price.
+   */
   private int price;
-  private boolean leased = false;
+
+  /**
+   * Commodity's leased.
+   */
+  private boolean leased;
 
   /**
    * Public constructor.
@@ -19,9 +31,10 @@ public final class Pricing {
    * @param name  commodity's name.
    * @param price commodity's price.
    */
-  public Pricing(String name, int price) {
+  public Pricing(final String name, final int price) {
     this.name = name;
     this.price = price;
+    this.leased = false;
   }
 
   /**
@@ -29,7 +42,7 @@ public final class Pricing {
    *
    * @param name new name to be set.
    */
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
@@ -47,7 +60,7 @@ public final class Pricing {
    *
    * @param price the price of the commodity.
    */
-  public void setPrice(int price) {
+  public void setPrice(final int price) {
     this.price = price;
   }
 
@@ -65,7 +78,7 @@ public final class Pricing {
    *
    * @param leased whether it is leased,
    */
-  public void setLeased(boolean leased) {
+  public void setLeased(final boolean leased) {
     this.leased = leased;
   }
 
@@ -74,7 +87,7 @@ public final class Pricing {
    *
    * @return whether it is leased.
    */
-  public boolean getLeased() {
+  public boolean isLeased() {
     return leased;
   }
 
@@ -83,7 +96,7 @@ public final class Pricing {
    *
    * @param id the id of the commodity.
    */
-  public void setId(int id) {
+  public void setId(final int id) {//NOPMD
     this.id = id;
   }
 

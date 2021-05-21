@@ -1,6 +1,6 @@
 package com.iluwatar.mapper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Asset class can modify the commodities category. It can add, remove
@@ -11,12 +11,12 @@ public final class Asset {
   /**
    * The corresponding pricingMapper.
    */
-  private final PricingMapper pricingMapper;
+  private final transient PricingMapper pricingMapper;
 
   /**
    * Public constructor.
    */
-  public Asset(PricingMapper pricingMapper) {
+  public Asset(final PricingMapper pricingMapper) {
     this.pricingMapper = pricingMapper;
   }
 
@@ -26,7 +26,7 @@ public final class Asset {
    * @param pricing       the object to be add.
    * @return whether it succeeds.
    */
-  public boolean addObject(Pricing pricing) {
+  public boolean addObject(final Pricing pricing) {
     return pricingMapper.addObject(pricing);
   }
 
@@ -36,7 +36,7 @@ public final class Asset {
    * @param name          the object to be removed.
    * @return whether it succeeds.
    */
-  public boolean removeObject(String name) {
+  public boolean removeObject(final String name) {
     return pricingMapper.removeObject(name);
   }
 
@@ -47,7 +47,7 @@ public final class Asset {
    * @param newPricing    new asset of this object.
    * @return whether it succeeds.
    */
-  public boolean modifyObject(String name, Pricing newPricing) {
+  public boolean modifyObject(final String name, final Pricing newPricing) {
     return pricingMapper.modifyObject(name, newPricing);
   }
 
@@ -56,7 +56,7 @@ public final class Asset {
    *
    * @return the query result.
    */
-  public ArrayList<Pricing> queryCategory() {
+  public List<Pricing> queryCategory() {
     return pricingMapper.queryCategory();
   }
 }

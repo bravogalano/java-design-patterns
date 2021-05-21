@@ -1,26 +1,3 @@
-/*
- * The MIT License
- * Copyright © 2014-2021 Ilkka Seppälä
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 package com.iluwatar.mapper;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,14 +6,17 @@ import com.iluwatar.mapper.pricing.LeaseRepository;
 import com.iluwatar.mapper.pricing.PricingCategory;
 import org.junit.jupiter.api.Test;
 
-class MethodTest {
+/**
+ * Testing the method validation.
+ */
+class MethodTest {//NOPMD
 
   /**
    * Testing the existing repository.
    */
   @Test
   void queryRepository() {
-    assertNotNull(new LeaseRepository().query());
+    assertNotNull(new LeaseRepository().query(), "Repository query success.");
   }
 
   /**
@@ -44,9 +24,9 @@ class MethodTest {
    */
   @Test
   void queryRepositoryExist() {
-    LeaseRepository leaseRepository = new LeaseRepository();
+    final LeaseRepository leaseRepository = new LeaseRepository();
     leaseRepository.query().add(new Pricing("a", 1));
-    assertEquals(1, leaseRepository.query().size());
+    assertEquals(1, leaseRepository.query().size(), "Repository query content correct.");
   }
 
   /**
@@ -54,9 +34,9 @@ class MethodTest {
    */
   @Test
   void findObjectInRepo() {
-    LeaseRepository leaseRepository = new LeaseRepository();
+    final LeaseRepository leaseRepository = new LeaseRepository();
     leaseRepository.query().add(new Pricing("a", 1));
-    assertNotNull(leaseRepository.findLease(0));
+    assertNotNull(leaseRepository.findLease(0), "Find success.");
   }
 
   /**
@@ -64,8 +44,8 @@ class MethodTest {
    */
   @Test
   void findNullInRepo() {
-    LeaseRepository leaseRepository = new LeaseRepository();
-    assertNull(leaseRepository.findLease(0));
+    final LeaseRepository leaseRepository = new LeaseRepository();
+    assertNull(leaseRepository.findLease(0), "Cannot find target.");
   }
 
   /**
@@ -73,7 +53,7 @@ class MethodTest {
    */
   @Test
   void queryCategory() {
-    assertNotNull(new PricingCategory().query());
+    assertNotNull(new PricingCategory().query(), "Category query success.");
   }
 
   /**
@@ -81,9 +61,9 @@ class MethodTest {
    */
   @Test
   void queryCategoryExist() {
-    PricingCategory pricingCategory = new PricingCategory();
+    final PricingCategory pricingCategory = new PricingCategory();
     pricingCategory.query().add(new Pricing("a", 1));
-    assertEquals(1, pricingCategory.query().size());
+    assertEquals(1, pricingCategory.query().size(), "Category query content correct.");
   }
 
   /**
@@ -91,9 +71,9 @@ class MethodTest {
    */
   @Test
   void findObjectInCategory() {
-    PricingCategory pricingCategory = new PricingCategory();
+    final PricingCategory pricingCategory = new PricingCategory();
     pricingCategory.query().add(new Pricing("a", 1));
-    assertNotNull(pricingCategory.findObject("a"));
+    assertNotNull(pricingCategory.findObject("a"), "Successfully find object.");
   }
 
   /**
@@ -101,8 +81,8 @@ class MethodTest {
    */
   @Test
   void findNullInCategory() {
-    PricingCategory pricingCategory = new PricingCategory();
-    assertNull(pricingCategory.findObject("a"));
+    final PricingCategory pricingCategory = new PricingCategory();
+    assertNull(pricingCategory.findObject("a"), "Cannot find the object in category.");
   }
 
   /**
@@ -110,8 +90,8 @@ class MethodTest {
    */
   @Test
   void mapperQueryRepo() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertNotNull(pricingMapper.queryRepository());
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertNotNull(pricingMapper.queryRepository(), "Mapper query the repository.");
   }
 
   /**
@@ -119,9 +99,9 @@ class MethodTest {
    */
   @Test
   void mapperQueryRepoSize() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addLease(new Pricing("f", 1));
-    assertEquals(1, pricingMapper.queryRepository().size());
+    assertEquals(1, pricingMapper.queryRepository().size(), "Mapper query result correct.");
   }
 
   /**
@@ -129,8 +109,8 @@ class MethodTest {
    */
   @Test
   void mapperQueryCate() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertNotNull(pricingMapper.queryCategory());
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertNotNull(pricingMapper.queryCategory(), "Mapper query category.");
   }
 
   /**
@@ -138,9 +118,9 @@ class MethodTest {
    */
   @Test
   void mapperQueryCateSize() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addObject(new Pricing("f", 1));
-    assertEquals(1, pricingMapper.queryCategory().size());
+    assertEquals(1, pricingMapper.queryCategory().size(), "Mapper query result correct.");
   }
 
   /**
@@ -148,10 +128,10 @@ class MethodTest {
    */
   @Test
   void mapperAddLease() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addLease(new Pricing("a", 1));
     pricingMapper.addLease(new Pricing("a", 1));
-    assertEquals(2, pricingMapper.queryRepository().size());
+    assertEquals(2, pricingMapper.queryRepository().size(), "Mapper add a lease.");
   }
 
   /**
@@ -159,9 +139,9 @@ class MethodTest {
    */
   @Test
   void mapperAddLeaseExact() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addLease(new Pricing("a", 1));
-    assertEquals("a", pricingMapper.queryRepository().get(0).getName());
+    assertEquals("a", pricingMapper.queryRepository().get(0).getName(), "Mapper add result correct.");
   }
 
   /**
@@ -169,8 +149,8 @@ class MethodTest {
    */
   @Test
   void mapperAddObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertTrue(pricingMapper.addObject(new Pricing("a", 1)));
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertTrue(pricingMapper.addObject(new Pricing("a", 1)), "Mapper add object correct.");
   }
 
   /**
@@ -178,9 +158,10 @@ class MethodTest {
    */
   @Test
   void mapperAddObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addObject(new Pricing("a", 1));
-    assertFalse(pricingMapper.addObject(new Pricing("a", 1)));
+    assertFalse(pricingMapper.addObject(new Pricing("a", 1)),
+            "Mapper cannot add duplicate object in category");
   }
 
   /**
@@ -188,9 +169,9 @@ class MethodTest {
    */
   @Test
   void mapperRemoveObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addObject(new Pricing("a", 1));
-    assertTrue(pricingMapper.removeObject("a"));
+    assertTrue(pricingMapper.removeObject("a"), "Mapper remove object successfully.");
   }
 
   /**
@@ -198,8 +179,8 @@ class MethodTest {
    */
   @Test
   void mapperRemoveObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertFalse(pricingMapper.removeObject("a"));
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertFalse(pricingMapper.removeObject("a"), "Mapper cannot remove object without existence.");
   }
 
   /**
@@ -207,8 +188,9 @@ class MethodTest {
    */
   @Test
   void mapperModifyObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertFalse(pricingMapper.modifyObject("a", new Pricing("a", 1)));
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertFalse(pricingMapper.modifyObject("a", new Pricing("a", 1)),
+            "Mapper modify object successfully.");
   }
 
   /**
@@ -216,9 +198,10 @@ class MethodTest {
    */
   @Test
   void mapperModifyObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addObject(new Pricing("a", 1));
-    assertTrue(pricingMapper.modifyObject("a", new Pricing("b", 2)));
+    assertTrue(pricingMapper.modifyObject("a", new Pricing("b", 2)),
+            "object cannot be modified without existence.");
   }
 
   /**
@@ -226,9 +209,9 @@ class MethodTest {
    */
   @Test
   void mapperRemoveLeaseSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addLease(new Pricing("a", 1));
-    assertTrue(pricingMapper.removeLease(0));
+    assertTrue(pricingMapper.removeLease(0), "The lease can be removed successfully.");
   }
 
   /**
@@ -236,8 +219,8 @@ class MethodTest {
    */
   @Test
   void mapperRemoveLeaseFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertFalse(pricingMapper.removeLease(0));
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertFalse(pricingMapper.removeLease(0), "The lease cannot be removed without existence.");
   }
 
   /**
@@ -245,9 +228,9 @@ class MethodTest {
    */
   @Test
   void mapperLeaseObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addLease(new Pricing("a", 1));
-    assertTrue(pricingMapper.leaseObject(0));
+    assertTrue(pricingMapper.leaseObject(0), "The object can be leased successfully.");
   }
 
   /**
@@ -255,8 +238,8 @@ class MethodTest {
    */
   @Test
   void mapperLeaseObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertFalse(pricingMapper.leaseObject(0));
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertFalse(pricingMapper.leaseObject(0), "The object cannot be leased without existence.");
   }
 
   /**
@@ -264,10 +247,10 @@ class MethodTest {
    */
   @Test
   void mapperReturnObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
+    final PricingMapper pricingMapper = new PricingMapper();
     pricingMapper.addLease(new Pricing("a", 1));
     pricingMapper.leaseObject(0);
-    assertTrue(pricingMapper.returnObject(0));
+    assertTrue(pricingMapper.returnObject(0), "The object can be returned successfully.");
   }
 
   /**
@@ -275,8 +258,8 @@ class MethodTest {
    */
   @Test
   void mapperReturnObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    assertFalse(pricingMapper.returnObject(0));
+    final PricingMapper pricingMapper = new PricingMapper();
+    assertFalse(pricingMapper.returnObject(0), "The object cannot be returned without existence.");
   }
 
   /**
@@ -284,19 +267,20 @@ class MethodTest {
    */
   @Test
   void customerQueryRepo() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Customer customer = new Customer(pricingMapper);
-    assertEquals(pricingMapper.queryRepository(),customer.queryRepository());
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Customer customer = new Customer(pricingMapper);
+    assertEquals(pricingMapper.queryRepository(), customer.queryRepository(),
+            "The customer can query the repository correctly.");
   }
 
   /**
    * Testing the customer can get the repository.
    */
   @Test
-  void customerQueryRepoSize(){
-    PricingMapper pricingMapper = new PricingMapper();
-    Customer customer = new Customer(pricingMapper);
-    assertEquals(0,customer.queryRepository().size());
+  void customerQueryRepoSize() {
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Customer customer = new Customer(pricingMapper);
+    assertEquals(0, customer.queryRepository().size(), "The customer can get the repository.");
   }
 
   /**
@@ -304,19 +288,20 @@ class MethodTest {
    */
   @Test
   void customerQueryCate() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Customer customer = new Customer(pricingMapper);
-    assertEquals(pricingMapper.queryCategory(),customer.queryCategory());
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Customer customer = new Customer(pricingMapper);
+    assertEquals(pricingMapper.queryCategory(), customer.queryCategory(),
+            "The customer can get the category correctly.");
   }
 
   /**
    * Testing the customer can get the category.
    */
   @Test
-  void customerQueryCateSize(){
-    PricingMapper pricingMapper = new PricingMapper();
-    Customer customer = new Customer(pricingMapper);
-    assertEquals(0,customer.queryCategory().size());
+  void customerQueryCateSize() {
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Customer customer = new Customer(pricingMapper);
+    assertEquals(0, customer.queryCategory().size(), "The customer can get the category.");
   }
 
   /**
@@ -324,19 +309,21 @@ class MethodTest {
    */
   @Test
   void leaseQueryRepo() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
-    assertEquals(pricingMapper.queryRepository(),lease.queryLease());
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
+    assertEquals(pricingMapper.queryRepository(), lease.queryLease(),
+            "The lease class can get the repository correctly.");
   }
 
   /**
    * Testing the lease class can get the repository.
    */
   @Test
-  void leaseQueryRepoSize(){
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
-    assertEquals(0,lease.queryLease().size());
+  void leaseQueryRepoSize() {
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
+    assertEquals(0, lease.queryLease().size(),
+            "The lease class can get the repository.");
   }
 
   /**
@@ -344,19 +331,20 @@ class MethodTest {
    */
   @Test
   void assetQueryCate() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
-    assertEquals(pricingMapper.queryCategory(),asset.queryCategory());
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
+    assertEquals(pricingMapper.queryCategory(), asset.queryCategory(),
+            "The asset can get the category correctly.");
   }
 
   /**
    * Testing the asset can get the category.
    */
   @Test
-  void assetQueryCateSize(){
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
-    assertEquals(0,asset.queryCategory().size());
+  void assetQueryCateSize() {
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
+    assertEquals(0, asset.queryCategory().size(), "The asset can get the category.");
   }
 
   /**
@@ -364,11 +352,11 @@ class MethodTest {
    */
   @Test
   void leaseAddLease() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
     lease.addLease(new Pricing("a", 1));
     lease.addLease(new Pricing("a", 1));
-    assertEquals(2, lease.queryLease().size());
+    assertEquals(2, lease.queryLease().size(), "The lease class can add leases.");
   }
 
   /**
@@ -376,10 +364,11 @@ class MethodTest {
    */
   @Test
   void leaseAddLeaseExact() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
     lease.addLease(new Pricing("a", 1));
-    assertEquals("a", lease.queryLease().get(0).getName());
+    assertEquals("a", lease.queryLease().get(0).getName(),
+            "The lease class can add a lease correctly.");
   }
 
   /**
@@ -387,9 +376,9 @@ class MethodTest {
    */
   @Test
   void assetAddObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
-    assertTrue(asset.addObject(new Pricing("a", 1)));
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
+    assertTrue(asset.addObject(new Pricing("a", 1)), "The asset can add a object in the category.");
   }
 
   /**
@@ -397,10 +386,10 @@ class MethodTest {
    */
   @Test
   void assetAddObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
     asset.addObject(new Pricing("a", 1));
-    assertFalse(asset.addObject(new Pricing("a", 1)));
+    assertFalse(asset.addObject(new Pricing("a", 1)), "The asset cannot add the duplicate object.");
   }
 
   /**
@@ -408,10 +397,10 @@ class MethodTest {
    */
   @Test
   void assetRemoveObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
     asset.addObject(new Pricing("a", 1));
-    assertTrue(asset.removeObject("a"));
+    assertTrue(asset.removeObject("a"), "The asset can remove the object.");
   }
 
   /**
@@ -419,9 +408,9 @@ class MethodTest {
    */
   @Test
   void assetRemoveObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
-    assertFalse(asset.removeObject("a"));
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
+    assertFalse(asset.removeObject("a"), "The asset cannot remove the object without existence.");
   }
 
   /**
@@ -429,9 +418,10 @@ class MethodTest {
    */
   @Test
   void assetModifyObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
-    assertFalse(asset.modifyObject("a", new Pricing("a", 1)));
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
+    assertFalse(asset.modifyObject("a", new Pricing("a", 1)),
+            "The asset cannot modify the object without existence.");
   }
 
   /**
@@ -439,10 +429,11 @@ class MethodTest {
    */
   @Test
   void assetModifyObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Asset asset = new Asset(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Asset asset = new Asset(pricingMapper);
     asset.addObject(new Pricing("a", 1));
-    assertTrue(asset.modifyObject("a", new Pricing("b", 2)));
+    assertTrue(asset.modifyObject("a", new Pricing("b", 2)),
+            "The asset can modify the object correctly.");
   }
 
   /**
@@ -450,10 +441,10 @@ class MethodTest {
    */
   @Test
   void leaseRemoveLeaseSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
     lease.addLease(new Pricing("a", 1));
-    assertTrue(lease.removeLease(0));
+    assertTrue(lease.removeLease(0), "The lease class can remove the lease correctly.");
   }
 
   /**
@@ -461,9 +452,9 @@ class MethodTest {
    */
   @Test
   void leaseRemoveLeaseFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
-    assertFalse(lease.removeLease(0));
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
+    assertFalse(lease.removeLease(0), "The lease class cannot remove the lease without existence.");
   }
 
   /**
@@ -471,10 +462,10 @@ class MethodTest {
    */
   @Test
   void leaseLeaseObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
     lease.addLease(new Pricing("a", 1));
-    assertTrue(lease.leaseObject(0));
+    assertTrue(lease.leaseObject(0), "The lease class can lease an object correctly.");
   }
 
   /**
@@ -482,9 +473,9 @@ class MethodTest {
    */
   @Test
   void leaseLeaseObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
-    assertFalse(lease.leaseObject(0));
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
+    assertFalse(lease.leaseObject(0), "The lease class cannot lease the object without existence.");
   }
 
   /**
@@ -492,11 +483,11 @@ class MethodTest {
    */
   @Test
   void leaseReturnObjectSuccess() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
     lease.addLease(new Pricing("a", 1));
     lease.leaseObject(0);
-    assertTrue(lease.returnObject(0));
+    assertTrue(lease.returnObject(0), "The lease class can return an object successfully.");
   }
 
   /**
@@ -504,8 +495,8 @@ class MethodTest {
    */
   @Test
   void leaseReturnObjectFailure() {
-    PricingMapper pricingMapper = new PricingMapper();
-    Lease lease = new Lease(pricingMapper);
-    assertFalse(lease.returnObject(0));
+    final PricingMapper pricingMapper = new PricingMapper();
+    final Lease lease = new Lease(pricingMapper);
+    assertFalse(lease.returnObject(0), "The lease class cannot return the object without existence.");
   }
 }

@@ -2,18 +2,24 @@ package com.iluwatar.mapper;
 
 import com.iluwatar.mapper.pricing.LeaseRepository;
 import com.iluwatar.mapper.pricing.PricingCategory;
-import java.util.ArrayList;
+
+import java.util.List;
 
 /**
- * <p>The mapper for the communication of customer, lease, asset and repository, category.</p>
+ * <p>The mapper for the communication of customer,
+ * lease, asset and repository, category.</p>
  */
 public final class PricingMapper {
 
   /**
-   * The category of commodities and repository for leasing.
+   * The repository for leasing.
    */
-  private final LeaseRepository leaseRepository;
-  private final PricingCategory pricingCategory;
+  private final transient LeaseRepository leaseRepository;
+
+  /**
+   * The category of commodities.
+   */
+  private final transient PricingCategory pricingCategory;
 
   /**
    * Public constructor.
@@ -28,7 +34,7 @@ public final class PricingMapper {
    *
    * @return the query result.
    */
-  public ArrayList<Pricing> queryCategory() {
+  public List<Pricing> queryCategory() {
     return pricingCategory.query();
   }
 
@@ -37,7 +43,7 @@ public final class PricingMapper {
    *
    * @return the query result.
    */
-  public ArrayList<Pricing> queryRepository() {
+  public List<Pricing> queryRepository() {
     return leaseRepository.query();
   }
 
@@ -47,14 +53,16 @@ public final class PricingMapper {
    * @param id the object id to be leased.
    * @return whether it succeeds.
    */
-  public boolean leaseObject(int id) {
-    Pricing pricing = leaseRepository.findLease(id);
-    if (pricing == null || pricing.getLeased()) {
-      return false;
+  public boolean leaseObject(final int id) {//NOPMD
+    final Pricing pricing = leaseRepository.findLease(id);
+    boolean rtn;
+    if (pricing == null || pricing.isLeased()) {
+      rtn = false;
     } else {
       pricing.setLeased(true);
-      return true;
+      rtn = true;
     }
+    return rtn;
   }
 
   /**
@@ -63,14 +71,16 @@ public final class PricingMapper {
    * @param id the object id to be returned.
    * @return whether is succeeds.
    */
-  public boolean returnObject(int id) {
-    Pricing pricing = leaseRepository.findLease(id);
-    if (pricing == null || !pricing.getLeased()) {
-      return false;
+  public boolean returnObject(final int id) {//NOPMD
+    final Pricing pricing = leaseRepository.findLease(id);
+    boolean rtn;
+    if (pricing == null || !pricing.isLeased()) {
+      rtn = false;
     } else {
       pricing.setLeased(false);
-      return true;
+      rtn = true;
     }
+    return rtn;
   }
 
   /**
@@ -78,8 +88,8 @@ public final class PricingMapper {
    *
    * @param pricing the commodity to be added.
    */
-  public void addLease(Pricing pricing) {
-    ArrayList<Pricing> repository = leaseRepository.query();
+  public void addLease(final Pricing pricing) {
+    final List<Pricing> repository = leaseRepository.query();
     for (int i = 0; i < repository.size(); i++) {
       if (repository.get(i).getId() != i) {
         repository.add(i, pricing);
@@ -97,15 +107,17 @@ public final class PricingMapper {
    * @param id the commodity's id.
    * @return whether it succeeds.
    */
-  public boolean removeLease(int id) {
-    ArrayList<Pricing> repository = leaseRepository.query();
+  public boolean removeLease(final int id) {//NOPMD
+    final List<Pricing> repository = leaseRepository.query();
+    boolean rtn = false;//NOPMD
     for (int i = 0; i < repository.size(); i++) {
       if (repository.get(i).getId() == id) {
         repository.remove(i);
-        return true;
+        rtn = true;
+        break;
       }
     }
-    return false;
+    return rtn;
   }
 
   /**
@@ -114,19 +126,23 @@ public final class PricingMapper {
    * @param pricing the object to be add.
    * @return whether it succeeds.
    */
-  public boolean addObject(Pricing pricing) {
-    ArrayList<Pricing> prices = pricingCategory.query();
-    for (Pricing i :
+  public boolean addObject(final Pricing pricing) {
+    final List<Pricing> prices = pricingCategory.query();
+    boolean rtn = true;//NOPMD
+    for (final Pricing i :
             prices) {
       if (i.getName().equals(pricing.getName())) {
-        return false;
+        rtn = false;//NOPMD
       }
     }
-    prices.add(pricing);
-    for (int i = 0; i < prices.size(); i++) {
-      prices.get(i).setId(i);
+    if (rtn) {
+      prices.add(pricing);
+      for (final Pricing i :
+              prices) {
+        i.setId(prices.indexOf(i));
+      }
     }
-    return true;
+    return rtn;
   }
 
   /**
@@ -135,21 +151,23 @@ public final class PricingMapper {
    * @param name the object to be removed.
    * @return whether it succeeds.
    */
-  public boolean removeObject(String name) {
-    ArrayList<Pricing> prices = pricingCategory.query();
+  public boolean removeObject(final String name) {
+    final List<Pricing> prices = pricingCategory.query();
+    boolean rtn = false;//NOPMD
     for (int i = 0; i < prices.size(); i++) {
       if (prices.get(i).getName().equals(name)) {
         prices.remove(i);
-        ArrayList<Pricing> repository = leaseRepository.query();
+        final List<Pricing> repository = leaseRepository.query();
         for (int j = 0; j < repository.size(); j++) {
           if (repository.get(j).getName().equals(name)) {
             repository.remove(j);
           }
         }
-        return true;
+        rtn = true;
+        break;
       }
     }
-    return false;
+    return rtn;
   }
 
   /**
@@ -159,21 +177,23 @@ public final class PricingMapper {
    * @param newPricing new asset of this object.
    * @return whether it succeeds.
    */
-  public boolean modifyObject(String name, Pricing newPricing) {
-    Pricing pricing = pricingCategory.findObject(name);
+  public boolean modifyObject(final String name, final Pricing newPricing) {
+    final Pricing pricing = pricingCategory.findObject(name);
+    boolean rtn;
     if (pricing == null) {
-      return false;
+      rtn = false;
     } else {
       pricing.setPrice(newPricing.getPrice());
       pricing.setName(newPricing.getName());
-      ArrayList<Pricing> repository = leaseRepository.query();
-      for (Pricing value : repository) {
+      final List<Pricing> repository = leaseRepository.query();
+      for (final Pricing value : repository) {
         if (value.getName().equals(name)) {
           value.setPrice(newPricing.getPrice());
           value.setName(newPricing.getName());
         }
       }
-      return true;
+      rtn = true;
     }
+    return rtn;
   }
 }

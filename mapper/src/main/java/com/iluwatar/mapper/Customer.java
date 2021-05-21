@@ -1,6 +1,6 @@
 package com.iluwatar.mapper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>The customer operations are defined in this class. Customer can query
@@ -11,12 +11,12 @@ public final class Customer {
   /**
    * The corresponding pricingMapper.
    */
-  private final PricingMapper pricingMapper;
+  private final transient PricingMapper pricingMapper;
 
   /**
    * Public constructor.
    */
-  public Customer(PricingMapper pricingMapper) {
+  public Customer(final PricingMapper pricingMapper) {
     this.pricingMapper = pricingMapper;
   }
 
@@ -25,7 +25,7 @@ public final class Customer {
    *
    * @return query result.
    */
-  public ArrayList<Pricing> queryCategory() {
+  public List<Pricing> queryCategory() {
     return pricingMapper.queryCategory();
   }
 
@@ -34,7 +34,7 @@ public final class Customer {
    *
    * @return query result.
    */
-  public ArrayList<Pricing> queryRepository() {
+  public List<Pricing> queryRepository() {
     return pricingMapper.queryRepository();
   }
 }

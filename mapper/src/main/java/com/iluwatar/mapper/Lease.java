@@ -1,6 +1,6 @@
 package com.iluwatar.mapper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Lease is the class to modify the repository information of commodities.
@@ -11,51 +11,51 @@ public final class Lease {
   /**
    * The corresponding pricingMapper.
    */
-  private final PricingMapper pricingMapper;
+  private final transient PricingMapper pricingMapper;
 
   /**
    * Public constructor.
    */
-  public Lease(PricingMapper pricingMapper) {
+  public Lease(final PricingMapper pricingMapper) {
     this.pricingMapper = pricingMapper;
   }
 
   /**
    * Lease a certain object.
    *
-   * @param id the object id to be leased.
+   * @param id            the object id to be leased.
    * @return whether it succeeds.
    */
-  public boolean leaseObject(int id) {
+  public boolean leaseObject(final int id) {//NOPMD
     return pricingMapper.leaseObject(id);
   }
 
   /**
    * Return a object.
    *
-   * @param id the object id to be returned.
+   * @param id            the object id to be returned.
    * @return whether is succeeds.
    */
-  public boolean returnObject(int id) {
+  public boolean returnObject(final int id) {//NOPMD
     return pricingMapper.returnObject(id);
   }
 
   /**
    * Add a commodity for leasing in the repository.
    *
-   * @param pricing the commodity to be added.
+   * @param pricing       the commodity to be added.
    */
-  public void addLease(Pricing pricing) {
+  public void addLease(final Pricing pricing) {
     pricingMapper.addLease(pricing);
   }
 
   /**
    * Remove a commodity for leasing in the repository.
    *
-   * @param id the commodity's id.
+   * @param id            the commodity's id.
    * @return whether it succeeds.
    */
-  public boolean removeLease(int id) {
+  public boolean removeLease(final int id) {//NOPMD
     return pricingMapper.removeLease(id);
   }
 
@@ -64,7 +64,7 @@ public final class Lease {
    *
    * @return the query result.
    */
-  public ArrayList<Pricing> queryLease() {
+  public List<Pricing> queryLease() {
     return pricingMapper.queryRepository();
   }
 }
